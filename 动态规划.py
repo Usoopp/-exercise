@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 """
 Created on Sun Aug 25 23:11:55 2019
-
+#  https://blog.csdn.net/u013309870/article/details/75193592
+#  原java版，改成python版
 @author: XiaoZh
 """
 import numpy as np
@@ -114,4 +115,3 @@ y6 = buttom_up_cut(p, 10)
 t11 = time.clock()
 t1 = t11 - t10
 print(t1)
-
