@@ -1,0 +1,78 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sat Sep 14 16:06:55 2019
+
+# https://www.nowcoder.com/profile/6282141/codeBookDetail?submissionId=24049721  
+# by marioZYN
+"""
+"""
+题目描述
+牛牛准备参加学校组织的春游, 出发前牛牛准备往背包里装入一些零食, 牛牛的背包容量为w。
+牛牛家里一共有n袋零食, 第i袋零食体积为v[i]。
+牛牛想知道在总体积不超过背包容量的情况下,他一共有多少种零食放法(总体积为0也算一种放法)。
+输入描述:
+输入包括两行
+第一行为两个正整数n和w(1 <= n <= 30, 1 <= w <= 2 * 10^9),表示零食的数量和背包的容量。
+第二行n个正整数v[i](0 <= v[i] <= 10^9),表示每袋零食的体积。
+输出描述:
+输出一个正整数, 表示牛牛一共有多少种零食放法。
+示例1
+输入
+复制
+3 10
+1 2 4
+输出
+复制
+8
+说明
+三种零食总体积小于10,于是每种零食有放入和不放入两种情况，一共有2*2*2 = 8种情况。
+"""
+
+
+
+#line = input()
+#n = int(line.split(' ')[0])
+#w = int(line.split(' ')[1])
+#line = input()
+#v = []
+#for i in range(n):
+#    v.append(int(line.split(' ')[i]))
+n = 3
+w = 10
+v=[1,2,4]
+
+
+def brute_force(remain_items,available_weight):
+    if len(remain_items) == 0:
+        return  1
+    elif available_weight==0:
+        return 1
+    else:
+        item = remain_items[0] 
+        if item < available_weight:  # 放入
+            return brute_force(remain_items[1:], available_weight - item) + brute_force(remain_items[1:], available_weight)
+        else:                        # 不放入
+            return brute_force(remain_items[1:],available_weight)
+        
+def brute_force2(remain_items,available_weight,item_sum):
+    if len(remain_items)==0:
+        return 1
+    elif available_weight ==0:
+        return 1
+    elif item_sum < available_weight:  #  如果当前的物品的总重量小于可用容量，就直接输出2^n
+        return 2**len(remain_items)
+    else:
+        item = remain_items[0]
+        if item < available_weight:    # 排序后的remain_items只有在第一个item小于available_weight情况下才有讨论的机会
+            if item_sum - item < available_weight:  
+                # item_sum > available_weight的情况下，item_sum - item < available_weight，剩下的remain_items也就不需要递归了。
+                return 2**len(remain_items[1:])
+            else:
+                return brute_force2(remain_items[1:], available_weight - item, item_sum - item) \
+                       + brute_force2(remain_items[1:], available_weight, item_sum)
+        else:
+            return 1
+
+
+print(brute_force(sorted(v), w))
+print(brute_force2(sorted(v), w, sum(v)))
