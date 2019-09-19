@@ -1,0 +1,109 @@
+package com.sort_algs;
+import java.util.Scanner;
+import static java.lang.System.in;
+import static java.lang.Integer.parseInt;
+
+public class FindN {
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(in);
+//		String[] str = sc.nextLine().replace("[", " ").replace("]","").split(",");
+//		int[] data = new int[str.length];
+//		for (int i= 0;i<data.length;i++) {
+//			data[i] = parseInt(str[i]);
+//		}
+//	    String str=sc.nextLine();
+//        String str1=str.toString().substring(1,str.length()-1);
+//        String[] str2=str1.split(",");
+//        int[] data=new int[str2.length];
+//        for(int i=0;i<str2.length;i++) {
+//            data[i]=Integer.parseInt(str2[i]);
+//        }
+//			        
+//		int[] data = {1,1,2,3,3,2,3};
+//		int k = data.length-3+1;
+//		int I = findND(data,k);
+//		
+////		int high = data.length - 1;
+////		int I = findND_recursive(data, 0, high, k-1);
+//		System.out.println(I);
+		
+		String values[] = {"abc","ab","ab","ab"};
+//		System.out.println(values);		
+
+		int k = 3-1;
+		int l[] = new int[values.length];
+		for(int i= 0;i<values.length;i++) {
+			l[i] = values[i].length();
+			System.out.println(l[i]);
+		}
+		
+		int I = findND(l,k);
+		
+		System.out.println(values[I]);	
+		System.out.println(l[I]);		
+		sc.close();
+	
+	}
+	
+	public  static int findND_recursive(int[] data, int begin, int high,int k) {	
+
+		int pos = partition(data,begin,high);
+		if (pos == k) {
+			return data[pos];
+		}else if (pos < k) {
+			return findND_recursive(data, pos+1, high, k);  //选择性尾递归。保证遇到合适的就返回，不会做多余的工作；
+		}else {
+			return findND_recursive(data, begin, pos-1, k);
+		}
+	}
+	
+	public  static int findND(int[] data,int k) {	
+		int begin = 0;
+		int end = data.length-1;
+		int pos = 0;
+		while(begin <= end) {
+			
+			 pos = partition(data, begin , end);
+			 if(pos == k-1) {
+				 return data[pos];
+			 }else if(pos > k-1) {
+				 end = pos - 1;
+			 }else {
+				 begin = pos + 1;
+			 }	 
+		}
+		return -1;
+	}
+	
+
+	
+	public static int partition(int[] data, int low, int high) {
+		int i = low;
+		int j = high + 1;
+		int v = data[low];
+		while(true) {
+			while(data[++i]<v) {
+				if(i==high) {
+					break;
+				}
+			}
+			while(data[--j]>v) {
+				if (j == low) {
+					break;
+				}
+			}			
+			if(i>=j) {
+				break;
+			}
+			int temp = data[i];
+			data[i] = data[j];
+			data[j] = temp;
+		}
+		int temp = data[j];
+		data[j] = v;
+		data[low] = temp;
+		
+		return j;
+	}
+	
+}
