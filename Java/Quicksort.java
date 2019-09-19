@@ -84,14 +84,12 @@ public class Quicksort {
 //        for (int i = 0; i < data.length; i++) {
 //            data[i] = parseInt(str[i]);    
 //        }
-		int[] a = {6,8,1,4,9,0,3,4,5,2,7};
-        
-        Quicksort.sort(a);
-        
-        
-		for(int i = 0;i<a.length;i++) {
-			System.out.println(a[i]);
-		}       
+	int[] a = {6,8,1,4,9,0,3,4,5,2,7};
+     
+        Quicksort.sort(a);  
+	for(int i = 0;i<a.length;i++) {
+		System.out.println(a[i]);
+	}       
 //        sc.close();
 	}
 }
